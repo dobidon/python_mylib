@@ -22,10 +22,9 @@ def Sh_Script_Write(scr_path, scr_lines):
         f.write(i+'\n')
     f.close()
     
-    scr_path = '"' + scr_path + '"'
     if scr_path.endswith('.sh'):
         subprocess.run(['chmod', '+x', scr_path])
     elif scr_path.endswith('.py'):
-        scr_path = 'python3 ' + scr_path
+        scr_path = 'python3 ' + '"' + scr_path + '"'
     
     return scr_path
