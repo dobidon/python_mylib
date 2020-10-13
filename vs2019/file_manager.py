@@ -1,7 +1,11 @@
 # -*- coding: utf-8 -*-
+#%%
+
 import os, pathlib
 
-def Create_My_File(file_name, file_content, encoding='iso-8859-9'):
+def Create_My_File(file_name, file_content, encoding='utf-8'):
+    if (encoding == 'tr'):
+        encoding = 'iso-8859-9'
     g = open(file_name, 'w+', encoding=encoding)
     g.write(file_content)
     g.close()
@@ -17,17 +21,30 @@ def Read_My_File(file_name, encoding='utf-8'):
     f.close()
     return output_var
 
+def Read_My_File_Binary(file_name):
+    f = open(file_name, 'rb')
+    output_var = f.read()
+    f.close()
+    return output_var
+
+def Seek_My_File(file_obj, seek_pos, encoding='utf-8'):
+    if type(file_obj) == str:
+        file_obj = open(file_obj, 'r+', encoding=encoding)
+
+    file_obj.seek(seek_pos)
+    return file_obj
+
 def Clean_Folder(folder_path, count=0):
     file_array = os.listdir(folder_path)
     file_array.sort()
     t_count = 0
-    
+
     if count < 0:
         count = 0
-    
+
     if not(count):
         count = len(file_array)
-        
+
     for the_file in file_array:
         if t_count >= count:
             return
@@ -55,7 +72,7 @@ def Folders_Check(folder_list, create=False):
         ans = []
     else:
         ans = True
-    
+
     for i in folder_list:
         t_list = i.split('/')
         path = pathlib.Path(os.path.abspath(os.path.join(*t_list)))
