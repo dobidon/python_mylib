@@ -2,6 +2,7 @@ import pandas as pd
 
 def pd_filter_by_col_value(table, col_idx, value, operator="=="):
     ans = None
+
     if operator == "==":
         ans = table.loc[table.iloc[:,col_idx] == value]
     elif operator == "<=":
@@ -15,6 +16,13 @@ def pd_filter_by_col_value(table, col_idx, value, operator="=="):
     elif operator == "!=":
         ans = table.loc[table.iloc[:,col_idx] != value]
 
+    return ans
+
+def pd_slice_col_by_idx(table, col_idx):
+    if type(col_idx) == int:
+        col_idx = [col_idx]
+
+    ans = table.iloc[:, col_idx]
 
     return ans
 
