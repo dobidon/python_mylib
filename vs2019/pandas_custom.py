@@ -36,3 +36,66 @@ def pd_sort_by(table, idx_array):
     table_sorted = table.sort_values(by=array_t)
 
     return table_sorted
+
+
+# Iterate Dataframe with a given user-defined function
+#
+# df: pandas.Dataframe      Dataframe
+# func: function            User-defined function
+# rtn: bool                 If this argument is true, this function will pipe 
+#   the return values of the user-defined function.
+# accumulate: bool          If user-defined function values will be accumulated,
+#   this argument must be set to True.
+# type: type                Type of the accumulated value. If accumulate setting is 
+#   True, the type of the value must be given through this argument.
+#
+# return:   
+
+
+def dataframe_iterator(df, func, rtn=True, accumulate=False, type=None):
+    """Iterate Dataframe with a given user-defined function.
+    
+    Arguments
+    --------
+        df: pandas.Dataframe    
+            Dataframe
+        func: function          
+            User-defined function
+        rtn: bool               
+            If this argument is true, this function will pipe 
+            the return values of the user-defined function.
+        accumulate: bool        
+            If user-defined function values will be accumulated,
+            this argument must be set to True.
+        type: type              
+            Type of the accumulated value. If accumulate setting is True, 
+            the type of the value must be given through this argument.
+    """
+
+    if func == None:
+        return None
+
+    if rtn == True:
+
+        if accumulate == True:
+            if type == int:
+                ans_func_list = 0
+            elif type == str:
+                ans_funct_list = ""
+            elif type ==  None:
+                return
+
+            ans_funct_list += func(index, row)
+
+        else:
+            ans_func_list = []
+
+            for index, row in df.iterrows():
+                ans_func = func(index, row)
+                ans_func_list.append(ans_func)
+
+        return ans_func_list
+
+    else:
+        for index, row in df.iterrows():
+            func(index, row)
